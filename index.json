@@ -1,0 +1,13 @@
+{
+  "url": "blag.fallingduck.net",
+  "tagline": "My awesome blog!",
+  "blogtitle": "Draconion",
+  "posts": [
+    {
+      "title": "First Post",
+      "link": "first-post",
+      "date": "December 5, 2014",
+      "tagline": "In which I create my new blog."
+    }
+  ]
+}
