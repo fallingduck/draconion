@@ -5,7 +5,7 @@ __author__ = 'Jack VanDrunen'
 __version__ = '0.3'
 
 
-import stpl as bottle
+import lib.stpl as bottle
 import json
 import shutil
 import os
