@@ -11,6 +11,7 @@ header {margin-bottom: 5%;}
 footer {margin-top: 5%; text-align: center; color: #666;}
 #sidelinks {float: left; width: 25%; position: relative; padding: 1%;}
 #mainarea {float: right; width: 70%; position: relative; padding: 1%;}
+#tagline {color: #666;}
 
 .sidelink {text-decoration: none;}
 .date {color: #666;}

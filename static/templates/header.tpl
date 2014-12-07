@@ -8,6 +8,7 @@
 	<body>
 		<header>
 			<h1>{{blogtitle}}</h1>
+                        <h3 id="tagline">{{tagline}}</h3>
 		</header>
 
 		<div id="sidelinks">
