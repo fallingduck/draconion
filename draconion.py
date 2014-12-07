@@ -2,7 +2,7 @@
 
 
 __author__ = 'Jack VanDrunen'
-__version__ = '0.1'
+__version__ = '14.12.6'
 
 
 import bottle
@@ -14,7 +14,7 @@ import os
 bottle.TEMPLATE_PATH = ['./posts/', './static/content/', './static/templates/']
 
 
-print 'Draconion v{0} by {1}'.format(__version__, __author__)
+print 'Draconion {0} by {1}'.format(__version__, __author__)
 print 'Cleaning and compiling to compiled/'
 
 
