@@ -1,46 +1,65 @@
+#!/usr/bin/env python2
+
+
+__author__ = 'Jack VanDrunen'
+__version__ = '0.1'
+
+
 import bottle
-from bottle import route, error, view, static_file, template, redirect, response, run
 import json
+import shutil
+import os
 
 
 bottle.TEMPLATE_PATH = ['./posts/', './static/content/', './static/templates/']
 
 
-@route('/raw/<filepath:path>')
-def serve_raw(filepath):
-    return static_file(filepath, root='./static')
-
-@route('/favicon.ico')
-def favicon():
-    return static_file('resources/favicon.ico', root='./static')
-
-@route('/')
-@view('archive')
-def serve_index():
-    with open('./index.json', 'r') as f:
-        return json.load(f)
-
-@route('/feed.xml')
-@view('rss')
-def feed():
-    response.content_type = 'application/xml'
-    with open('./index.json', 'r') as f:
-        return json.load(f)
-
-@route('/<page>')
-@route('/<page>/')
-def serve_page(page):
-    if page == 'archive':
-        redirect('/')
-    return template(page)
-
-@error(401)
-@error(403)
-@error(404)
-@error(500)
-def server_error(error):
-    return template('error')
+print 'Draconion v{0} by {1}'.format(__version__, __author__)
+print 'Cleaning and compiling to compiled/'
 
 
-run(debug=True, quiet=True, host='localhost', port=3030)
+# First, clean ./compiled
+if os.path.exists('./compiled'):
+    shutil.rmtree('./compiled')
+
+
+# Next, let's pull in all of the static resources
+shutil.copytree('./static/resources/', './compiled/')
+
+
+# Load index.json
+with open('index.json', 'r') as f:
+    index = json.load(f)
+
+
+# Render all of the posts
+for post in index['posts']:
+    link = './compiled/{0}.html'.format(post['link'])
+    with open(link, 'w') as f:
+        f.write(bottle.template(post['link'], **index))
+
+
+# Render the archive
+with open('./compiled/{0}'.format(index['archiveuri']), 'w') as f:
+    f.write(bottle.template('archive', **index))
+
+
+# Render the error page
+with open('./compiled/404.html', 'w') as f:
+    f.write(bottle.template('error', **index))
+
+
+# Render all of the extra pages included in index.json
+for page in index['include']:
+    link = './compiled/{0}.html'.format(page)
+    with open(link, 'w') as f:
+        f.write(bottle.template(page, **index))
+
+
+# Render the RSS feed
+with open('./compiled/feed.xml', 'w') as f:
+    f.write(bottle.template('rss', **index))
+
+
+print 'Done!'
 

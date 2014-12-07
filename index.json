@@ -2,6 +2,8 @@
   "url": "blag.fallingduck.net",
   "tagline": "My awesome blog!",
   "blogtitle": "Draconion",
+  "archiveuri": "index.html",
+  "uri": "{0}.html",
   "posts": [
     {
       "title": "First Post",
@@ -9,5 +11,13 @@
       "date": "December 5, 2014",
       "tagline": "In which I create my new blog."
     }
+  ],
+  "include": [
+    "about"
+  ],
+  "sidebar": [
+    ["ARCHIVE", "."],
+    ["ABOUT", "about.html"],
+    ["SUBSCRIBE", "feed.xml"]
   ]
 }

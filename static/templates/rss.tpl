@@ -7,8 +7,8 @@
 % newtime = datetime.strftime(datetime.strptime(post['date'], '%B %d, %Y'),'%a, %d %b %Y %H:%M:%S GMT')
   <item>
     <description>{{post['tagline']}}</description>
-    <guid>http://{{url}}/{{post['link']}}</guid>
-    <link>http://{{url}}/{{post['link']}}/</link>
+    <guid>http://{{url}}/{{uri.format(post['link'])}}</guid>
+    <link>http://{{url}}/{{uri.format(post['link'])}}</link>
     <pubDate>{{newtime}}</pubDate>
     <title>{{post['title']}}</title>
   </item>
