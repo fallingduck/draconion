@@ -1,8 +1,12 @@
 # Draconion
 
-UPDATE 6/12/14: Draconion now generates a static site instead of dynamically serving files.
+*The libertarian blogging engine.*
 
-Draconion is the premier, super-simple blogging engine that most definitely wasn't written in 30 minutes(TM).
+Draconion was designed with one purpose: to not force you down one path when you're setting up your new blog or website. Because of its flexibility, Draconion is very much DIY. Why should you use Draconion then? Because it provides a great way to get the skeleton of your site up and running, and allows you to easily use templating on a static website.
+
+NOTE: Your site doesn't even need to be a blog! Just remove the `posts` and `archiveuri` attributes from `index.json`, and you have a static homepage or whatever you want.
+
+---
 
 1. Have Python 2.7 installed on your system.
 2. `git clone https://github.com/fallingduck/draconion.git`

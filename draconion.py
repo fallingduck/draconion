@@ -2,7 +2,7 @@
 
 
 __author__ = 'Jack VanDrunen'
-__version__ = '14.12.6'
+__version__ = '0.3'
 
 
 import bottle
@@ -32,16 +32,23 @@ with open('index.json', 'r') as f:
     index = json.load(f)
 
 
-# Render all of the posts
-for post in index['posts']:
-    link = './compiled/{0}.html'.format(post['link'])
-    with open(link, 'w') as f:
-        f.write(bottle.template(post['link'], **index))
+# If this *is* a blog...
+if index.get('posts') is not None:
 
+    # Render the posts
+    for post in index['posts']:
+        link = './compiled/{0}.html'.format(post['link'])
+        with open(link, 'w') as f:
+            f.write(bottle.template(post['link'], **index))
 
-# Render the archive
-with open('./compiled/{0}'.format(index['archiveuri']), 'w') as f:
-    f.write(bottle.template('archive', **index))
+    # Render the RSS feed
+    with open('./compiled/feed.xml', 'w') as f:
+        f.write(bottle.template('rss', **index))
+
+    # Render the archive, if one exists
+    if index.get('archiveuri') is not None:
+        with open('./compiled/{0}'.format(index['archiveuri']), 'w') as f:
+            f.write(bottle.template('archive', **index))
 
 
 # Render the error page
@@ -54,11 +61,6 @@ for page in index['include']:
     link = './compiled/{0}.html'.format(page)
     with open(link, 'w') as f:
         f.write(bottle.template(page, **index))
-
-
-# Render the RSS feed
-with open('./compiled/feed.xml', 'w') as f:
-    f.write(bottle.template('rss', **index))
 
 
 print 'Done!'
