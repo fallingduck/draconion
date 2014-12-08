@@ -18,3 +18,5 @@ footer {margin-top: 5%; text-align: center; color: #666;}
 
 a {color: #CCC;}
 a:hover {color: #FFF;}
+
+a.darklink {color: #666;}
