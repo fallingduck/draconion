@@ -10,7 +10,7 @@ import json
 import shutil
 import os
 import sys
-import time
+from datetime import datetime
 
 
 bottle.TEMPLATE_PATH = ['./posts/', './static/content/', './static/templates/']
@@ -47,7 +47,7 @@ if len(sys.argv) > 1:
         with open('index.json', 'r') as f:
             data = json.load(f)
 
-        for index, post in list(data['posts']):
+        for index, post in enumerate(data['posts']):
             if post['link'] == link:
                 data['posts'].pop(index)
                 print 'Retracted!'
@@ -69,7 +69,7 @@ if len(sys.argv) > 1:
         link = sys.argv[2]
         title = raw_input('Title: ')
         tagline = raw_input('Tagline: ')
-        pubdate = time.strftime('%B %d, %Y')
+        pubdate = '{dt:%B} {dt.day}, {dt:%Y}'.format(dt=datetime.now())
         with open('index.json', 'r') as f:
             data = json.load(f)
         data['posts'].insert(0, {'title': title, 'link': link, 'date': pubdate, 'tagline': tagline})
@@ -87,7 +87,7 @@ if len(sys.argv) > 1:
         with open('index.json', 'r') as f:
             data = json.load(f)
 
-        for index, post in list(data['posts']):
+        for index, post in enumerate(data['posts']):
             if post['link'] == link:
                 data['posts'].pop(index)
                 print 'Retracted!'
