@@ -2,19 +2,121 @@
 
 
 __author__ = 'Jack VanDrunen'
-__version__ = '0.3'
+__version__ = '0.4'
 
 
 import lib.stpl as bottle
 import json
 import shutil
 import os
+import sys
+import time
 
 
 bottle.TEMPLATE_PATH = ['./posts/', './static/content/', './static/templates/']
 
 
 print 'Draconion {0} by {1}'.format(__version__, __author__)
+
+
+if len(sys.argv) > 1:
+
+    if sys.argv[1] == 'write' or sys.argv[1] == 'edit':
+        filepath = './posts/{0}.tpl'.format(sys.argv[2])
+        title = sys.argv[2].replace('-', ' ').title()
+        if not os.path.exists(filepath):
+            with open(filepath, 'w') as f:
+                f.write("% include('header.tpl', title='{0}')\n\n".format(title))
+                f.write("<h2>{0}</h2>\n".format(title))
+                f.write("<p>Lorem ipsum dolor sit amet...</p>\n\n")
+                f.write("% include('footer.tpl')\n")
+
+        os.system('nano {0}'.format(filepath))
+        print 'Done!'
+        sys.exit(0)
+
+    elif sys.argv[1] == 'delete':
+        filepath = './posts/{0}.tpl'.format(sys.argv[2])
+        if os.path.exists(filepath):
+            os.remove(filepath)
+            print 'Done!'
+        else:
+            print 'File does not exist!'
+            sys.exit(0)
+        link = sys.argv[2]
+        with open('index.json', 'r') as f:
+            data = json.load(f)
+
+        for index, post in list(data['posts']):
+            if post['link'] == link:
+                data['posts'].pop(index)
+                print 'Retracted!'
+                break
+        else:
+            print 'Not published!'
+            sys.exit(0)
+
+        with open('index.json', 'w') as f:
+            f.write(json.dumps(data, indent=2))
+        print 'Annotated index.json'
+
+    elif sys.argv[1] == 'publish':
+        filepath = './posts/{0}.tpl'.format(sys.argv[2])
+        if not os.path.exists(filepath):
+            print 'File does not exist!'
+            sys.exit(0)
+
+        link = sys.argv[2]
+        title = raw_input('Title: ')
+        tagline = raw_input('Tagline: ')
+        pubdate = time.strftime('%B %d, %Y')
+        with open('index.json', 'r') as f:
+            data = json.load(f)
+        data['posts'].insert(0, {'title': title, 'link': link, 'date': pubdate, 'tagline': tagline})
+        with open('index.json', 'w') as f:
+            f.write(json.dumps(data, indent=2))
+        print 'Annotated index.json'
+
+    elif sys.argv[1] == 'retract':
+        filepath = './posts/{0}.tpl'.format(sys.argv[2])
+        if not os.path.exists(filepath):
+            print 'File does not exist!'
+            sys.exit(0)
+
+        link = sys.argv[2]
+        with open('index.json', 'r') as f:
+            data = json.load(f)
+
+        for index, post in list(data['posts']):
+            if post['link'] == link:
+                data['posts'].pop(index)
+                print 'Retracted!'
+                break
+        else:
+            print 'Not published!'
+            sys.exit(0)
+
+        with open('index.json', 'w') as f:
+            f.write(json.dumps(data, indent=2))
+        print 'Annotated index.json'
+
+    elif sys.argv[1] == 'help' or sys.argv[1] == '-h' or sys.argv[1] == '--help':
+        print 'Usage: draconion <command> [<file>]'
+        print
+        print 'Commands:'
+        print 'write    Create or edit a blog post'
+        print 'delete   Delete a blog post'
+        print 'publish  Publish a blog post'
+        print 'retract  Unpublish a blog post (does not delete the draft)'
+        print 'compile  Generate your site (default)'
+        print
+        sys.exit(0)
+
+    elif sys.argv[1] != 'compile':
+        print 'Unknown command!'
+        sys.exit(0)
+
+
 print 'Cleaning and compiling to compiled/'
 
 
