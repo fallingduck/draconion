@@ -1,23 +1,32 @@
 {
-  "url": "blag.fallingduck.net",
-  "tagline": "My awesome blog!",
-  "blogtitle": "Draconion",
-  "archiveuri": "index.html",
-  "uri": "{0}.html",
-  "posts": [
-    {
-      "title": "First Post",
-      "link": "first-post",
-      "date": "December 5, 2014",
-      "tagline": "In which I create my new blog."
-    }
-  ],
   "include": [
     "about"
-  ],
+  ], 
+  "blogtitle": "Draconion", 
+  "url": "blag.fallingduck.net", 
+  "tagline": "My awesome blog!", 
+  "archiveuri": "index.html", 
+  "posts": [
+    {
+      "date": "December 5, 2014", 
+      "tagline": "In which I create my new blog.", 
+      "link": "first-post", 
+      "title": "First Post"
+    }
+  ], 
+  "uri": "{0}.html", 
   "sidebar": [
-    ["ARCHIVE", "."],
-    ["ABOUT", "about.html"],
-    ["SUBSCRIBE", "feed.xml"]
+    [
+      "ARCHIVE", 
+      "."
+    ], 
+    [
+      "ABOUT", 
+      "about.html"
+    ], 
+    [
+      "SUBSCRIBE", 
+      "feed.xml"
+    ]
   ]
 }

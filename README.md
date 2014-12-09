@@ -13,17 +13,36 @@ NOTE: Your site doesn't even need to be a blog! Just remove the `posts` and `arc
 1. Have Python 2.7 installed on your system.
 2. `git clone https://github.com/fallingduck/draconion.git`
 3. `cd draconion`
-
-To make a new post, create a new `.tpl` file in the `posts/` directory. Then, edit your `index.json` and append the information on the new post into the `posts` array.
+4. `python2 draconion.py --help`
 
 Before you make your blog live, I suggest editing the following:
 
 1. `index.json`
 2. `static/templates/header.tpl` - The layout of the site, also see `static/resources/global.css`
 
+---
+
+### Writing a Blog Post
+
+Writing a blog post with Draconion has gotten easier! Now, just run the following command:
+
+`$ python2 draconion.py write title-of-post`
+
+`title-of-post` should be a unique title, with hyphens instead of spaces. This will bring up the ubiquitous `nano` text editor, and allow you to edit the new post page to your content.
+
+When you are ready to publish, simply run the following:
+
+`$ python2 draconion.py publish title-of-post`
+
+This will automatically generate a new version of your site. If you ever want to take back what you've written, you can run
+
+`$ python2 draconion.py retract title-of-post`
+
+---
+
 When your site is ready to be deployed, run the following command:
 
-`$ python2 draconion.py`
+`$ python2 draconion.py compile`
 
 This command will create (or clean) the `compiled/` directory, and will populate it with your site's static content and freshly rendered static `html` files. You can point your webserver (nginx, apache, or whatever) to the `compiled/` directory, or you can move the `compiled/` directory to wherever your files will be served from.
 
